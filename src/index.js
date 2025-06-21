@@ -7,6 +7,8 @@ import swaggerSpec from '../swagger.js';
 import disasterRoutes from './routes/disasters.js';
 import { mockAuth } from './middlewares/auth.js';
 import swaggerSetup from '../swagger.js';
+import cors from 'cors';
+
 
 
 dotenv.config();
@@ -14,8 +16,14 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+app.use(cors({
+    origin: ['https://disaster-response-coordination-platform-bcbz.onrender.com'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  }));
 app.use(express.json());
 app.use(mockAuth);
+
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/disasters', disasterRoutes);
