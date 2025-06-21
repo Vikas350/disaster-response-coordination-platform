@@ -170,11 +170,6 @@ router.post("/geocode", async (req, res) => {
         return res.status(400).json({ error: "Missing description in request body" });
     }
 
-    console.log({
-        geminiKey,
-        description
-    })
-
     try {
         // Step 1: Extract location using Gemini API (cached)
         const locationText = await checkCache("gemini_" + description, async () => {
