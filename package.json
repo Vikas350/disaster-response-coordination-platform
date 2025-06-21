@@ -1,0 +1,19 @@
+{
+  "name": "disaster-response-backend",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.4",
+    "axios": "^1.6.0",
+    "cheerio": "^1.1.0",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.3"
+  }
+}

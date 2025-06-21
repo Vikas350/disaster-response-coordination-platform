@@ -1,0 +1,103 @@
+// 🚀 Run Command:
+// npm install && npm start
+
+// 🗂️ Supabase SQL Schema Setup:
+/*
+CREATE EXTENSION IF NOT EXISTS postgis;
+
+CREATE TABLE disasters (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT,
+  location_name TEXT,
+  location GEOGRAPHY(Point, 4326),
+  description TEXT,
+  tags TEXT[],
+  owner_id TEXT,
+  created_at TIMESTAMP,
+  audit_trail JSONB
+);
+
+CREATE TABLE reports (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  disaster_id UUID,
+  user_id TEXT,
+  content TEXT,
+  image_url TEXT,
+  verification_status TEXT,
+  created_at TIMESTAMP
+);
+
+CREATE TABLE resources (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  disaster_id UUID,
+  name TEXT,
+  location_name TEXT,
+  location GEOGRAPHY(Point, 4326),
+  type TEXT,
+  created_at TIMESTAMP
+);
+
+CREATE TABLE cache (
+  key TEXT PRIMARY KEY,
+  value JSONB,
+  expires_at TIMESTAMP
+);
+
+CREATE INDEX disasters_location_idx ON disasters USING GIST (location);
+CREATE INDEX resources_location_idx ON resources USING GIST (location);
+CREATE INDEX disasters_tags_idx ON disasters USING GIN (tags);
+CREATE INDEX disasters_owner_idx ON disasters (owner_id);
+
+CREATE OR REPLACE FUNCTION get_nearby_resources(lat DOUBLE PRECISION, lon DOUBLE PRECISION, radius INTEGER)
+RETURNS SETOF resources AS $$
+  SELECT * FROM resources
+  WHERE ST_DWithin(
+    location,
+    ST_SetSRID(ST_MakePoint(lon, lat), 4326)::geography,
+    radius
+  );
+$$ LANGUAGE sql;
+*/
+
+// 📦 Postman Collection Export: Use below sample curl commands to test endpoints
+/*
+1. Create Disaster:
+curl -X POST http://localhost:3000/disasters \
+  -H "Content-Type: application/json" \
+  -d '{"title": "NYC Flood", "location_name": "Manhattan, NYC", "description": "Flooding", "tags": ["flood"]}'
+
+2. Get All Disasters:
+curl http://localhost:3000/disasters
+
+3. Update Disaster:
+curl -X PUT http://localhost:3000/disasters/<id> \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Updated Flood"}'
+
+4. Delete Disaster:
+curl -X DELETE http://localhost:3000/disasters/<id>
+
+5. Geocode (Gemini + Mapbox):
+curl -X POST http://localhost:3000/disasters/geocode \
+  -H "Content-Type: application/json" \
+  -d '{"description": "Flooding in Manhattan, NYC"}'
+
+6. Social Media:
+curl http://localhost:3000/disasters/<id>/social-media
+
+7. Resources Near:
+curl "http://localhost:3000/disasters/<id>/resources?lat=40.7128&lon=-74.0060"
+
+8. Official Updates:
+curl http://localhost:3000/disasters/<id>/official-updates
+
+9. Image Verification:
+curl -X POST http://localhost:3000/disasters/<id>/verify-image \
+  -H "Content-Type: application/json" \
+  -d '{"image_url": "http://example.com/image.jpg"}'
+*/
+
+// ✅ Swagger Annotations will be added as JSDoc-style blocks above each route handler if needed next.
+// Let me know if you want me to auto-generate them for Swagger UI support.
+
+// All core functionality is now live and testable.
